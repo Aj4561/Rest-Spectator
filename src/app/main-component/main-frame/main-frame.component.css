@@ -1,0 +1,131 @@
+.tab-container {
+    box-sizing: border-box;
+    height: 43px;
+    width: 100%;
+    border: solid 1px #d3d0d0;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f3f3ff;
+}
+
+.main-tab {
+    display: flex;
+    height: 97vh;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: stretch;
+    justify-content: space-evenly;
+    align-items: stretch;
+    border: solid 1px #d3d0d0;
+    margin: 10px;
+}
+
+.http-div {
+    border: solid 1px #d3d0d0;
+    box-sizing: border-box;
+    border-radius: 7px;
+    width: 84%;
+    margin: 6px;
+    padding: 20px;
+    margin-bottom: 118px;
+    position: relative;
+
+
+}
+
+.tab {
+    width: 160px;
+    border-right: solid 1px #d3d0d0;
+    position: relative;
+    margin-left: 20px;
+    margin-right: 15px;
+    margin-top: 7px;
+    cursor: pointer;
+}
+
+.add-tab {
+    font-size: 26px;
+    color: gray;
+    margin-left: 0px;
+    cursor: pointer;
+}
+
+.tab-content {
+    position: relative;
+}
+
+/* Hide the "Remove Tab" button by default */
+.remove-button {
+    position: absolute;
+    left: 119px;
+    margin: 1px;
+    border: gray;
+    color: gray;
+    display: none;
+    top: 0px;
+    cursor: pointer;
+}
+
+/* Show the "Remove Tab" button when hovering over the circle */
+.circle:hover+.remove-button {
+    display: block;
+}
+
+@media screen and (max-width: 992px) {
+    .http-div {
+        width: 70%;
+
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .http-div {
+        width: 80%;
+
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .http-div {
+        width: 90%;
+
+    }
+}
+
+.responcebuttton {
+    margin: 2px;
+    height: 35px;
+
+}
+
+.buttonstwo {
+    display: -webkit-box;
+    top: -6px;
+    left: 13px;
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+.iconssave {
+    font-size: 20px;
+    position: relative;
+    left: 5px;
+}
+
+.requestcontent {
+    box-shadow: rgb(143 179 222) 0px 0px 6px, rgba(0, 0, 0, 0.23) 0px 0px 6px;
+}
+
+.flash {
+    color: #429bff;
+    position: relative;
+    font-size: 23px;
+    left: -6px;
+}
+
+.responceData {
+    font-weight: bold;
+    color: #004fbd;
+}
