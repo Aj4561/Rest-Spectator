@@ -1,0 +1,21 @@
+.card {
+    border-bottom: 1px solid #8d8b8b;
+    border-radius: 5px;
+    margin: 3px;
+    height: 60px;
+    background: linear-gradient(112.1deg, rgba(32, 38, 57, 0.5) 11.4%, rgba(63, 76, 119, 0.5) 70.2%);
+}
+
+.logo {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    left: 17px;
+}
+
+.logo-lable {
+    color: white;
+    justify-content: center;
+    top: 13px;
+    position: absolute;
+}
