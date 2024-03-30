@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +10,7 @@ export class SidebarComponent implements OnInit {
   @Output() toggleSection = new EventEmitter<string>(); 
 
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
    
@@ -24,6 +25,7 @@ export class SidebarComponent implements OnInit {
   }
   toggleapis(section:string){
     this.toggleSection.emit(section);
+    this.router.navigate([`/main-page/rest-api-test`])
   }
   mockserv(section:string){
     this.toggleSection.emit(section);
