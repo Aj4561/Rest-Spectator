@@ -1,0 +1,229 @@
+<div class="main-tab">
+
+    <div class="tab-container">
+
+        <form [formGroup]="myForm" style="display: flex; flex-wrap: wrap;">
+            <div class="tab" *ngFor="let tab of tabs?.controls; let i = index" [formGroupName]="i">
+                <!-- Add form controls for each tab -->
+                <label style="color: gray; width: 120px;">{{ tab.get('title')?.value }}</label>
+                <span class="circle" (mouseover)="showRemoveButton = true"
+                    (mouseout)="showRemoveButton = false">⦿</span>
+                <button type="button" class="remove-button" (click)="removeTab(i)">X</button>
+            </div>
+
+            <!-- Button to add a new tab -->
+            <span class="add-tab" (click)="addTab()">+</span>
+        </form>
+
+    </div>
+
+
+
+    <div class="http-div">
+        <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+            <div class="wrapper-div">
+                <div class="request-div">
+                    <div class="container-fluid">
+                        <div class="row inversemain">
+                            <div class="col-md-6" style="padding-left: 0">
+                                <h3 class="post-heading"><i class="fa fa-bolt flash" aria-hidden="true"></i>Simple HTTP
+                                </h3>
+                            </div>
+                            <div class="col-md-6 buttonstwo" style="padding-left: 0">
+                                <button class="btn btn-primary responcebuttton">Save<i
+                                        class="fas fa-save iconssave"></i></button>
+                            </div>
+                            <div class="col-md-12 requestcontent" style="padding: 0">
+                                <div class="input-group">
+                                    <select class="select" id="request-select" formControlName="method">
+                                        <option value="GET">GET</option>
+                                        <option value="POST">POST</option>
+                                        <option value="PUT">PUT</option>
+                                        <option value="DELETE">DELETE</option>
+                                    </select>
+
+                                    <input type="text" class="form-control req-input" placeholder="Enter URL"
+                                        aria-label="" formControlName="url" />
+                                </div>
+                                <div *ngIf="submitted && addEditForm.get('url')?.invalid"
+                                    class="alert alert-danger mt-4 mb-0">
+                                    <div *ngIf="addEditForm.get('url')?.errors?.required">
+                                        URL is required.
+                                    </div>
+                                    <div *ngIf="addEditForm.get('url')?.errors?.pattern">
+                                        Please enter valid url.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-options">
+                <ul class="nav nav-tabs header-opt-div">
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                  addEditForm.value?.type == 'params' ? 'active' : ''
+                }}">
+                            <label>
+                                <input type="radio" data-id="params" value="params" name="type"
+                                    formControlName="type" />
+                                Params
+                            </label>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link data-type {{
+                  addEditForm.value?.type == 'body' ? 'active' : ''
+                }} ">
+                            <label>
+                                <input type="radio" checked data-id="json" value="body" name="type"
+                                    formControlName="type" />
+                                Body
+                            </label>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                  addEditForm.value?.type == 'header' ? 'active' : ''
+                }}">
+                            <label>
+                                <input type="radio" data-id="header" value="header" name="type"
+                                    formControlName="type" />
+                                Header
+                            </label>
+                        </a>
+                    </li>
+                </ul>
+                <div class="format-div" *ngIf="addEditForm.get('type')?.value == 'params'">
+                    <label>Query Params</label>
+                </div>
+                <div class="format-div" *ngIf="addEditForm.get('type')?.value == 'body'">
+                    <label>
+                        <input type="radio" checked data-id="json" value="application/json"
+                            formControlName="contentType" />
+                        JSON
+                    </label>
+                    <label>
+                        <input type="radio" data-id="form-data" value="x-www-form-urlencoded"
+                            formControlName="contentType" />
+                        form-data
+                    </label>
+                </div>
+
+                <div class="tab-content opt-div">
+                    <div id="header" *ngIf="addEditForm.get('type')?.value == 'header'">
+                        <table class="table header">
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody class="add-div-tbody" formArrayName="headers">
+                                <tr class="tr-div" *ngFor="
+                      let header of custonFormArray('headers')?.controls;
+                      let i = index
+                    " [formGroupName]="i">
+                                    <td>
+                                        <input type="text" class="key p-input" placeholder="Key"
+                                            formControlName="key" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="value p-input" placeholder="Value"
+                                            formControlName="value" />
+                                    </td>
+                                    <td (click)="removeBody(i, 'headers')"
+                                        *ngIf="header?.value?.key && header?.value?.value">
+                                        <a class="remove-row">&times;</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="" id="body" *ngIf="
+                addEditForm.get('type')?.value == 'body' &&
+                addEditForm.get('contentType')?.value == 'application/json'
+              ">
+                        <textarea class="json-text" data-gramm="false" formControlName="jsonTextArea"></textarea>
+                    </div>
+
+                    <div class="" id="form-data" *ngIf="
+                addEditForm.get('type')?.value == 'body' &&
+                addEditForm.get('contentType')?.value == 'x-www-form-urlencoded'
+              ">
+                        <table class="table header">
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody class="add-div-tbody" formArrayName="bodys">
+                                <tr class="tr-div" *ngFor="
+                      let bod of custonFormArray('bodys').controls;
+                      let i = index
+                    " [formGroupName]="i">
+                                    <td>
+                                        <input type="text" class="key p-input" placeholder="Key"
+                                            formControlName="key" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="value p-input" placeholder="Value"
+                                            formControlName="value" />
+                                    </td>
+                                    <td (click)="removeBody(i, 'bodys')" *ngIf="bod?.value?.key && bod?.value?.value">
+                                        <a class="remove-row">&times;</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="" id="form-data" *ngIf="addEditForm.get('type')?.value == 'params'">
+                        <table class="table header">
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody class="add-div-tbody" formArrayName="params">
+                                <tr class="tr-div" *ngFor="
+                      let bod of custonFormArray('params').controls;
+                      let i = index
+                    " [formGroupName]="i">
+                                    <td>
+                                        <input type="text" class="key p-input" placeholder="Key"
+                                            formControlName="key" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="value p-input" placeholder="Value"
+                                            formControlName="value" />
+                                    </td>
+                                    <td (click)="removeBody(i, 'params')" *ngIf="bod?.value?.key && bod?.value?.value">
+                                        <a class="remove-row">&times;</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="response-body">
+                    <pre class="responceData">{{ response | json }}</pre>
+                </div>
+            </div>
+            <div class="save-div">
+                <button type="submit" class="save-btn">Send</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
